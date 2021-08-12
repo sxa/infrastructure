@@ -28,7 +28,7 @@ The infrastructure project contains:
 You can propose contributions by sending pull requests (PRs) through GitHub.
 Following these guidelines will help us merge your pull requests smoothly:
 
-1. Your pull request is an opportunity to explain both what changes you'd like
+1. Your pull request is an opportunity to explain both what changes you would like
    pulled in, but also _why_ you'd like them added. Providing clarity on why
    you want changes makes it easier to accept, and provides valuable context to
    review.  If there is a link to an issue in the PR that contains these details
