@@ -104,9 +104,9 @@ Additional_Build_Tools_Ubuntu20:
 
 Test_Tool_Packages:
   - acl
-  - mercurial
+#  - mercurial
   - perl
-  - xauth
+#  - xauth
 #  - xorg
 #  - xvfb
   - binfmt-support
