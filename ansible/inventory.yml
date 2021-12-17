@@ -46,6 +46,13 @@ hosts:
           solaris10u11-x64-1: {ip: 147.75.85.212}
           solaris10u11-x64-2: {ip: 147.75.85.213}
 
+      - pictlab:
+          pictlab-ubuntu2104-riscv64-1: {description: 040}
+          pictlab-ubuntu2104-riscv64-1: {description: 041}
+          pictlab-ubuntu2104-riscv64-2: {description: 042}
+          pictlab-ubuntu2104-riscv64-3: {description: 043}
+          pictlab-ubuntu2104-riscv64-4: {description: 044}
+
       - inspira:
           solaris10u11-sparcv9-1: {}
           solaris10u11-sparcv9-2: {}
@@ -157,6 +164,12 @@ hosts:
           ubuntu1604-x64-1: {ip: 147.75.204.239}
           ubuntu2004-x64-2: {ip: 147.75.100.127}
           win2012r2-x64-1: {ip: 147.75.32.146, user: Admin}
+
+      - pictlab:
+          pictlab-ubuntu2104-riscv64-1: {description: 041}
+          pictlab-ubuntu2104-riscv64-2: {description: 042}
+          pictlab-ubuntu2104-riscv64-3: {description: 043}
+          pictlab-ubuntu2104-riscv64-4: {description: 044}
 
       - macincloud:
           macos1010-x64-1: {ip: 74.80.250.151, user: admin, description: TBD}
