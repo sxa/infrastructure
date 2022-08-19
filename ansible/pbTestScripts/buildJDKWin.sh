@@ -118,6 +118,8 @@ setJDKVars
 processArgs $*
 cloneRepo
 
+export ARCHITECTURE=x86-32
+
 echo "buildJDKWin.sh DEBUG:
 	TARGET_OS=${TARGET_OS:-}
 	ARCHITECTURE=${ARCHITECTURE:-}
