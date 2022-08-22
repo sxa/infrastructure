@@ -20,21 +20,48 @@
   when: (not vs2019_installed.stat.exists)
   tags: MSVS_2019
 
-- name: Install Visual Studio Community 2019
-  win_shell: 'C:\temp\vs_community19.exe --wait --add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended;includeOptional --quiet --norestart'
-  args:
-    executable: cmd
-  when: (not vs2019_installed.stat.exists)
-  register: vs2019_error
-  failed_when: vs2019_error.rc != 0 and vs2019_error.rc != 3010
-  tags: MSVS_2019
+- name: Pull and extract from /Vendor_Files if available
+  block:
+    - name: Transfer and Extract Visual Studio 2019 predefined layout
+      unarchive:
+        src: /Vendor_Files/windows/VS2019_layout.tar.gz
+        dest: C:\temp
+        remote_src: false
+      register: _vendor_copied
+      failed_when: false
+      tags: [MSVS_2019, vendor_files]
 
-- name: Install ARM64 components
-  win_shell: Start-Process -FilePath 'C:\temp\vs_community19.exe' -Wait -NoNewWindow -ArgumentList
-    'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community" --quiet
-    --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.VisualStudio.Component.VC.MFC.ARM64'
-  when: (not vs2019_installed.stat.exists)
-  tags: MSVS_2019
+    - name: Install Visual Studio Community 2019 from predfined layout
+      win_shell: 'C:\temp\vs_community19.exe --wait --layout C:\TEMP\VSLayout --quiet --norestart'
+      args:
+        executable: cmd
+      when: (not vs2019_installed.stat.exists and _vendor_copied.failed is not defined)
+      register: vs2019_error
+      failed_when: vs2019_error.rc != 0 and vs2019_error.rc != 3010
+      tags: [MSVS_2019, vendor_files]
+
+    - name: Install Visual Studio Community 2019 (latest version)
+      win_shell: 'C:\temp\vs_community19.exe --wait --add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended;includeOptional --quiet --norestart'
+      args:
+        executable: cmd
+      when: (not vs2019_installed.stat.exists)
+      register: vs2019_error
+      failed_when: vs2019_error.rc != 0 and vs2019_error.rc != 3010 and _vendor_copied.failed is defined
+      tags: MSVS_2019
+
+    - name: Clean VS2019 layout install files
+      file:
+        path: C:\Temp\VSLayout
+        state: absent
+      when: _vendor_copied.failed is not defined
+      tags: [MSVS_2019, vendor_files]
+
+#- name: Install ARM64 components
+#  win_shell: Start-Process -FilePath 'C:\temp\vs_community19.exe' -Wait -NoNewWindow -ArgumentList
+#    'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community" --quiet
+#    --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.VisualStudio.Component.VC.MFC.ARM64'
+#  when: (not vs2019_installed.stat.exists)
+#  tags: MSVS_2019
 
 - name: Register Visual Studio Community 2019 DIA SDK shared libraries
   win_command: 'regsvr32 /s "{{ item }}"'
