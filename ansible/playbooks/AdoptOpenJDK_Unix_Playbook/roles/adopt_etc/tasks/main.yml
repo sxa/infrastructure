@@ -129,6 +129,13 @@
 #  tags: ansiblerunlog
 
 # Version of the above that works
+- name: Look at the file with the date stamp
+  command: ls -l /var/log/ansiblerun.log
+  ignore_errors: yes
+
+- name: Look at the file with the date stamp
+  command: touch /var/log/ansiblerun.log
+
 - name: Record playbook completion with time in /var/log/ansiblerun.log
   command: echo S {{ ansible_date_time.iso8601 }} >> /var/log/ansiblerun.log
 
