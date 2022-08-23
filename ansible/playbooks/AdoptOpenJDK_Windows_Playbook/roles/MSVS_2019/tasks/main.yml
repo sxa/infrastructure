@@ -31,10 +31,36 @@
       failed_when: false
       tags: [MSVS_2019, vendor_files]
 
+    - name: check variable
+      win_shell: echo _vendor_copied is defined
+      when: _vendor_copied is defined
+
+    - name: check variable
+      win_shell: echo _vendor_copied is true
+      when: _vendor_copied is true
+
+    - name: check variable
+      win_shell: echo _vendor_copied.failed is defined
+      when: _vendor_copied.failed is defined
+
+    - name: check variable
+      win_shell: echo _vendor_copied.failed is not defined
+      when: _vendor_copied.failed is not defined
+
+    - name: check variable
+      win_shell: echo _vendor_copied.failed is not defined
+      when: _vendor_copied.failed == false
+
+    - name: check variable
+      win_shell: echo _vendor_copied.failed is not defined
+      when: _vendor_copied is true
+
+
     - name: Install Visual Studio Community 2019 from predefined layout
       win_shell: 'C:\temp\vs_community19.exe --wait --layout C:\TEMP\VSLayout --quiet --norestart'
       args:
         executable: cmd
+#      when: (not vs2019_installed.stat.exists) and _vendor_copied.failed is not defined)
       when: (not vs2019_installed.stat.exists and _vendor_copied.failed is not defined)
       register: vs2019_error
       failed_when: vs2019_error.rc != 0 and vs2019_error.rc != 3010
