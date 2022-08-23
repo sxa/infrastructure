@@ -130,4 +130,9 @@
 
 # Version of the above that works
 - name: Record playbook completion with time in /var/log/ansiblerun.log
-  command: echo $(date +%Y%m%dT%H%M%S) >> /var/log/ansiblerun.log
+  command: echo S {{ ansible_date_time.iso8601 }} >> /var/log/ansiblerun.log
+
+- name: Look at the file with the date stamp
+  command: ls -l /var/log/ansiblerun.log
+  
+
