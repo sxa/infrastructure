@@ -24,14 +24,14 @@
   block:
     - name: Transfer and Extract Visual Studio 2019 predefined layout
       unarchive:
-        src: /Vendor_Files/windows/VS2019_layout.tar.gz
+        src: https://ci.adoptopenjdk.net/userContent/winansible/VS2019_layout.tar.gz
         dest: C:\temp
         remote_src: false
       register: _vendor_copied
       failed_when: false
       tags: [MSVS_2019, vendor_files]
 
-    - name: Install Visual Studio Community 2019 from predfined layout
+    - name: Install Visual Studio Community 2019 from predefined layout
       win_shell: 'C:\temp\vs_community19.exe --wait --layout C:\TEMP\VSLayout --quiet --norestart'
       args:
         executable: cmd
