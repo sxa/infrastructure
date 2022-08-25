@@ -22,13 +22,30 @@
 
 - name: Pull and extract from /Vendor_Files if available
   block:
+    - name: Download Visual Studio predefined layout
+      win_get_url:
+        url: 'https://ci.adoptopenjdk.net/userContent/winansible/VS2019_layout.tar.gz'
+        checksum: 
+        checksum_algorithm: sha256
+        dest: 'C:\temp\VS2019_layout.tar.gz'
+        force: no
+      when: (not vs2019_installed.stat.exists)
+      tags: [MSVS_2019, vendor_files]
+
     - name: Transfer and Extract Visual Studio 2019 predefined layout
       unarchive:
-        src: https://ci.adoptopenjdk.net/userContent/winansible/VS2019_layout.tar.gz
+        src: 'C:\temp\VS2019_layout.tar.gz'
         dest: C:\temp
         remote_src: false
       register: _vendor_copied
       failed_when: false
+      tags: [MSVS_2019, vendor_files]
+
+    - name: Clean VS2019 layout install tarball
+      file:
+        path: C:\temp\VS2019_layout.tar.gz
+        state: absent
+      when: _vendor_copied.failed is not defined
       tags: [MSVS_2019, vendor_files]
 
     - name: check variable
@@ -55,9 +72,8 @@
       win_shell: echo _vendor_copied.failed is not defined
       when: _vendor_copied is true
 
-
     - name: Install Visual Studio Community 2019 from predefined layout
-      win_shell: 'C:\temp\vs_community19.exe --wait --layout C:\TEMP\VSLayout --quiet --norestart'
+      win_shell: 'C:\temp\vs_community19.exe --wait --layout C:\temp\VSLayout --quiet --norestart'
       args:
         executable: cmd
 #      when: (not vs2019_installed.stat.exists) and _vendor_copied.failed is not defined)
