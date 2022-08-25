@@ -41,12 +41,12 @@
       failed_when: false
       tags: [MSVS_2019, vendor_files]
 
-    - name: Clean VS2019 layout install tarball
-      file:
-        path: C:\temp\VS2019_layout.tar.gz
-        state: absent
-      when: _vendor_copied.failed is not defined
-      tags: [MSVS_2019, vendor_files]
+#    - name: Clean VS2019 layout install tarball
+#      file:
+#        path: C:\temp\VS2019_layout.tar.gz
+#        state: absent
+#      when: _vendor_copied.failed is not defined
+#      tags: [MSVS_2019, vendor_files]
 
     - name: check variable
       win_shell: echo _vendor_copied is defined
