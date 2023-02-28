@@ -460,3 +460,11 @@
   when:
     - not fallocate_installed.stat.exists
   tags: build_tools
+
+- name: Verify Liberica
+  shell: /usr/lib/jvm/jdk-11/bin/java -version
+  environment:
+    LD_PRELOAD_64: /usr/lib/jvm/fallocate.so
+
+- name: Look at /usr/lib/jvm
+  shell: ls -l /usr/lib/jvm
