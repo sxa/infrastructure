@@ -96,6 +96,57 @@
     - ansible_architecture == "riscv64"
   tags: build_tools
 
+# JDK 21 on Linux-riscv64 is a special-case as it's the only version that
+# will work properly in a docker container. The version here was cross-compiled
+# from the jdk-21.0.1+12.1 Temurin release that has RVV patches for C910/C920 cores
+# This versin came from https://ci.adoptium.net/job/build-jdk19-rv64-cross/427/
+
+- name: Check if jdk-21 is already installed in the target location
+  shell: ls -ld /usr/lib/jvm/jdk-21/bin/javac >/dev/null 2>&1
+  failed_when: false
+  register: rvjdk21_installed
+  changed_when: false
+  when: ansible_architecture == "riscv64"
+  tags:
+    - adoptopenjdk_install
+    - skip_ansible_lint
+
+- name: Install JDK 21 on Linux-riscv64
+  when:
+    - ansible_architecture == "riscv64"
+    - rvjdk21_installed.rc != 0
+  tags: adoptopenjdk_install
+  block:
+    - name: Download jdk-21.0.1+12.1 pre-release build (Linux-riscv64)
+      get_url:
+        url: https://ci.adoptium.net/userContent/riscv/jdk21u-riscv64-21.0.1+12.1-ea-cross-20231116.tar.gz
+        dest: /tmp/jdk21.tar.gz
+        mode: 0440
+        checksum: sha256:8a0eb5913e360098bf9ba41cdd56cf5f6afddb5c865d9cd08eebd4d214ac9a2f
+      retries: 3
+      delay: 5
+      register: adoptopenjdk_download
+      until: adoptopenjdk_download is not failed
+
+    - name: Install jdk 21
+      unarchive:
+        src: /tmp/jdk21.tar.gz
+        dest: /usr/lib/jvm
+        remote_src: yes
+
+    - name: Remove jdk21.tar.gz (Linux-riscv64)
+      file:
+        path: /tmp/jdk21.tar.gz
+        state: absent
+
+    - name: Create jdk-21 symlink to bootjdk install directory
+      file:
+        src: '/usr/lib/jvm/jdk-21.0.1+12'
+        dest: '/usr/lib/jvm/jdk-21'
+        state: link
+        owner: root
+        group: root
+
 - name: Install additional build tools for Ubuntu 20 +
   package: "name={{ item }} state=latest"
   with_items: "{{ Additional_Build_Tools_Ubuntu20 }}"
