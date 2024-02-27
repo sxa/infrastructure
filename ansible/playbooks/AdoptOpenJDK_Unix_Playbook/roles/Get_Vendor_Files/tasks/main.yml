@@ -9,6 +9,21 @@
   delegate_to: localhost
   run_once: true
 
+- name: Check if local /Vendor_Files exists
+  stat: path=/Vendor_Files
+  register: local_vendor_files
+  delegate_to: localhost
+  run_once: true
+
+- name: ls /
+  shell: ls /
+  failed_when: false
+
+- name: ls /var/lib/awx/projects
+  shell: ls /var/lib/awx/projects
+  failed_when: false
+
+
 - name: Check out AdoptOpenJDK/secrets
   git: repo=git@github.com:AdoptOpenJDK/secrets.git dest=vendor_files force=true
   delegate_to: localhost
