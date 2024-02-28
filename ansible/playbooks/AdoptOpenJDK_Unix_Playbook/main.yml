@@ -28,6 +28,7 @@
     - role: Get_Vendor_Files
       tags: [vendor_files, adoptopenjdk, jenkins_user, nagios_plugins, superuser]
     - Version
+    - curl
     - role: adoptopenjdk_install  # Previous LTS
       jdk_version: 17
       when:
