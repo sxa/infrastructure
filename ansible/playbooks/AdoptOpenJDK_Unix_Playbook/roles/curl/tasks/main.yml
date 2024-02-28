@@ -121,7 +121,7 @@
 - name: Install latest version of curl for MacOS
   become: yes
   become_user: "{{ ansible_user }}"
-  homebrew:
+  community.general.homebrew:
     name: curl
     state: latest
     path: "{{ homebrew_path }}"
