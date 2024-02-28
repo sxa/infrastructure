@@ -118,18 +118,18 @@
     - ansible_distribution == "MacOSX"
   tags: curl
 
-- name: Install latest version of curl for MacOS
-  become: yes
-  become_user: "{{ ansible_user }}"
-  community.general.homebrew:
-    name: curl
-    state: latest
-    path: "{{ homebrew_path }}"
-  when:
-    - ansible_distribution == "MacOSX"
-    - "macos_version_number is version('10.13', '>')"
-    - ((not curl_version.stdout) or ((curl_version.stdout) and (curl_version.stdout is version_compare(curl_oldest, operator='lt', strict=True))))
-  tags: curl
+#- name: Install latest version of curl for MacOS
+#  become: yes
+#  become_user: "{{ ansible_user }}"
+#  community.general.homebrew:
+#    name: curl
+#    state: latest
+#    path: "{{ homebrew_path }}"
+#  when:
+#    - ansible_distribution == "MacOSX"
+#    - "macos_version_number is version('10.13', '>')"
+#    - ((not curl_version.stdout) or ((curl_version.stdout) and (curl_version.stdout is version_compare(curl_oldest, operator='lt', strict=True))))
+#  tags: curl
 
 - name: Find install directory MacOS
   shell: ls -la /usr/local/Cellar/curl/7.*/bin/curl | awk '{print $9}'
