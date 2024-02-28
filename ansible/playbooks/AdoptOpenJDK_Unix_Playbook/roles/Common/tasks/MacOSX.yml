@@ -90,6 +90,20 @@
   tags:
     - brew_upgrade
 
+- name: Install latest version of curl for MacOS
+  become: yes
+  become_user: "{{ ansible_user }}"
+  community.general.homebrew:
+    name: curl
+    state: latest
+    path: "{{ homebrew_path }}"
+  when:
+    - ansible_distribution == "MacOSX"
+    - "macos_version_number is version('10.13', '>')"
+    - ((not curl_version.stdout) or ((curl_version.stdout) and (curl_version.stdout is version_compare(curl_oldest, operator='lt', str
+  tags: curl
+
+
 - name: Install brew cu
   become: yes
   become_user: "{{ ansible_user }}"
