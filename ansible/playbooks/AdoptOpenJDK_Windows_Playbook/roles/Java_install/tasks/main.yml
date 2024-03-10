@@ -34,7 +34,7 @@
     api_url: api.adoptopenjdk.net
     api_vendor: adoptopenjdk
   when:
-    - jdk_version == '10' or jdk_version == '16'
+    - jdk_version == 10 or jdk_version == 16
   tags: adoptopenjdk_install
 
 - name: Download Temurin JDK {{ jdk_version }}
