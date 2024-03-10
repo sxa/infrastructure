@@ -42,17 +42,17 @@
     - role: Get_Vendor_Files
       tags: [vendor_files, adoptopenjdk, jenkins]
     - Version
-#    - Common
+    - Common
 #    - Windows_Updates
 #    - WMF_5.1
 #    - role: Jenkins               # AdoptOpenJDK infrastructure
 #      tags: [jenkins, adoptopenjdk]
 #    - CodesignCert
     - 7-Zip                       # Mostly extracting other prereqs :-)
-#    - cygwin
+    - cygwin
 #    - Strawberry_Perl             # Testing
 ##    - Freemarker                  # OpenJ9"
-#    - GIT
+    - GIT
     - Java7                       # JDK8 build bootstrap
     - Java8                       # JDK9 build bootstrap/ For Gradle
     - role: Java_install          # JDK11 build bootstrap
