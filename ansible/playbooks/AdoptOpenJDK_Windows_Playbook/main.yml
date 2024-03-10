@@ -42,17 +42,17 @@
     - role: Get_Vendor_Files
       tags: [vendor_files, adoptopenjdk, jenkins]
     - Version
-    - Common
-    - Windows_Updates
-    - WMF_5.1
-    - role: Jenkins               # AdoptOpenJDK infrastructure
-      tags: [jenkins, adoptopenjdk]
-    - CodesignCert
+#    - Common
+#    - Windows_Updates
+#    - WMF_5.1
+#    - role: Jenkins               # AdoptOpenJDK infrastructure
+#      tags: [jenkins, adoptopenjdk]
+#    - CodesignCert
     - 7-Zip                       # Mostly extracting other prereqs :-)
-    - cygwin
-    - Strawberry_Perl             # Testing
-#    - Freemarker                  # OpenJ9"
-    - GIT
+#    - cygwin
+#    - Strawberry_Perl             # Testing
+##    - Freemarker                  # OpenJ9"
+#    - GIT
     - Java7                       # JDK8 build bootstrap
     - Java8                       # JDK9 build bootstrap/ For Gradle
     - role: Java_install          # JDK11 build bootstrap
@@ -67,29 +67,29 @@
       jdk_version: 20
     - role: Java_install          # Latest LTS, for use by agents
       jdk_version: 21
-    - ANT                         # Testing
-    - role: MSVS_2013
-      when: ansible_architecture == "64-bit"
-    - role: MSVS_2017             # OpenJ9
-      when: ansible_architecture == "64-bit"
-    - role: MSVS_2019                   # OpenJ9
-      tags: MSVS_2019
-    - role: MSVS_2022
-      tags: MSVS_2022
-    - NVidia_Cuda_Toolkit         # OpenJ9
-    - NTP_TIME
-    - Clang_64bit                 # OpenJ9
-    - Clang_32bit                 # OpenJ9
-    - nasm                        # OpenJ9
-    - Rust                        # IcedTea-Web
-    - IcedTea-Web                 # For Jenkins webstart
-    - WiX                         # For creating installers
-    - NSClient                    # Required For Nagios Monitoring
-    - shortNames
-    - Dragonwell                  # Dragonwell bootstrap image
-    - role: Jenkins_Service_Installation # Automate installing the jenkins service
-      tags: [jenkins, adoptopenjdk]
-      when: jenkins_secret is defined  # Only run if jenkins_secret is defined
-    - role: logs
-      position: "End"
-      tags: always
+#    - ANT                         # Testing
+#    - role: MSVS_2013
+#      when: ansible_architecture == "64-bit"
+#    - role: MSVS_2017             # OpenJ9
+#      when: ansible_architecture == "64-bit"
+#    - role: MSVS_2019                   # OpenJ9
+#      tags: MSVS_2019
+#    - role: MSVS_2022
+#      tags: MSVS_2022
+#    - NVidia_Cuda_Toolkit         # OpenJ9
+#    - NTP_TIME
+#    - Clang_64bit                 # OpenJ9
+#    - Clang_32bit                 # OpenJ9
+#    - nasm                        # OpenJ9
+#    - Rust                        # IcedTea-Web
+#    - IcedTea-Web                 # For Jenkins webstart
+#    - WiX                         # For creating installers
+#    - NSClient                    # Required For Nagios Monitoring
+#    - shortNames
+#    - Dragonwell                  # Dragonwell bootstrap image
+#    - role: Jenkins_Service_Installation # Automate installing the jenkins service
+#      tags: [jenkins, adoptopenjdk]
+#      when: jenkins_secret is defined  # Only run if jenkins_secret is defined
+#    - role: logs
+#      position: "End"
+#      tags: always
