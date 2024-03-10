@@ -2,6 +2,19 @@
 ################
 # Java_install #
 ################
+
+- name: Create C:\temp directory
+  win_file:
+    path: C:\temp
+    state: directory
+  tags: basic_config
+
+- name: Create C:\openjdk directory
+  win_file:
+    path: C:\openjdk
+    state: directory
+  tags: basic_config
+
 - name: Test if Java is already installed version {{ jdk_version }}
   win_stat:
     path: 'C:\openjdk\jdk-{{ jdk_version }}\bin'
