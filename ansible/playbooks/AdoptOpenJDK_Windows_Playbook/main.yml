@@ -23,7 +23,7 @@
 # For example, it can be 'all' or 'x86' for when a host is in the group 'x86'.
 - name: Ansible Windows playbook
   hosts: localhost
-  connection: local
+  connection: winrm
   gather_facts: yes
   tasks:
     - name: Load Standard Variables
@@ -49,10 +49,8 @@
     - role: Jenkins               # AdoptOpenJDK infrastructure
       tags: [jenkins, adoptopenjdk]
     - CodesignCert
-    - 7-Zip                       # Mostly extracting other prereqs :-)
     - cygwin
     - Strawberry_Perl             # Testing
-#    - Freemarker                  # OpenJ9"
     - GIT
     - Java7                       # JDK8 build bootstrap
     - Java8                       # JDK9 build bootstrap/ For Gradle
@@ -82,12 +80,10 @@
     - Clang_64bit                 # OpenJ9
     - Clang_32bit                 # OpenJ9
     - nasm                        # OpenJ9
-    - Rust                        # IcedTea-Web
     - IcedTea-Web                 # For Jenkins webstart
     - WiX                         # For creating installers
     - NSClient                    # Required For Nagios Monitoring
     - shortNames
-    - Dragonwell                  # Dragonwell bootstrap image
     - role: Jenkins_Service_Installation # Automate installing the jenkins service
       tags: [jenkins, adoptopenjdk]
       when: jenkins_secret is defined  # Only run if jenkins_secret is defined
