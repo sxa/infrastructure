@@ -4,7 +4,7 @@
 ##########
 - name: Test if Cygwin is already installed
   win_stat:
-    path: 'C:\cygwin64'
+    path: 'C:\cygwin64\bin\jq.exe'
   register: cygwin_installed
   tags: cygwin
 
