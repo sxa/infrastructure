@@ -7,7 +7,7 @@
 
 # This task doesn't actually matter, aslong as it runs and is registered. The timestamp for the registered variable is used
 - name: Dummy task to get timestamp
-  win_command: whoami
+  win_command: cmd /c echo Hello
   register: date_output
 
 # Accounts for cases where playbook executor is windows and its executing on localhost
