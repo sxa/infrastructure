@@ -120,12 +120,12 @@
   register: vs2022_error
   failed_when: vs2022_error.rc != 0 and vs2022_error.rc != 3010
 
-- name: Register Visual Studio Community 2022 DIA SDK shared libraries
-  win_command: 'regsvr32 /s "{{ item }}"'
-  with_items:
-    - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
-    - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
-  when: (not vs2022_installed.stat.exists) and (windows_version.stdout_lines[0] | regex_search('^(10\.|11\.|2016|2019|2022)'))
+#- name: Register Visual Studio Community 2022 DIA SDK shared libraries
+#  win_command: 'regsvr32 /s "{{ item }}"'
+#  with_items:
+#    - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
+#    - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
+#  when: (not vs2022_installed.stat.exists) and (windows_version.stdout_lines[0] | regex_search('^(10\.|11\.|2016|2019|2022)'))
 
 - name: Reboot machine after Visual Studio installation
   win_reboot:
