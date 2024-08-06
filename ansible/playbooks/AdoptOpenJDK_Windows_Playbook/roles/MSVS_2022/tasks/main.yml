@@ -105,8 +105,8 @@
 # https://learn.microsoft.com/en-us/visualstudio/releases/2022/release-history
 # 17.7.34302.85    url: 'https://download.visualstudio.microsoft.com/download/pr/47b236ad-5505-4752-9d2b-5cf9795528bc/87684889f46dec53d1452f4a0ff9fec1ac202a97ebed866718d7c0269e814b28/vs_BuildTools.exe'
     url: 'https://download.visualstudio.microsoft.com/download/pr/1d66edfe-3c83-476b-bf05-e8901c62ba7f/bac71effb5a23d7cd1a81e5f628a0c8dcb7e8a07e0aa7077c853ed84a862dceb/vs_BuildTools.exe' # 17.7.3 = 17.7.34024.191
-#    checksum: 44957c393b3c4dcaf1918f086437a520fc3b3dee83dbe786e5d757f331257856
-#    checksum_algorithm: sha256
+    checksum: bac71effb5a23d7cd1a81e5f628a0c8dcb7e8a07e0aa7077c853ed84a862dceb
+    checksum_algorithm: sha256
     dest: 'C:\temp\vs_BuildTools22.exe'
     force: no
   when: (not vs2022_installed.stat.exists) and (windows_version.stdout_lines[0] | regex_search('^(10\.|11\.|2016|2019|2022)'))
