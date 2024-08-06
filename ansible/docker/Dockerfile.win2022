@@ -29,4 +29,4 @@ RUN net user ansible %PW% /ADD & net localgroup "Administrators" ansible /ADD & 
     --skip-tags=adoptopenjdk,reboot,NTP_TIME,MSVS_2013,MSVS_2017,MSVS_2019 playbooks/AdoptOpenJDK_Windows_Playbook/main.yml & \
     net user ansible /DELETE
 
-
+ENTRYPOINT ["C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat", "&&", "powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
