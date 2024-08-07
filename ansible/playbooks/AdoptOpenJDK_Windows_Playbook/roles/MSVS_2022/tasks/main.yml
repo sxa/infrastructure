@@ -77,11 +77,11 @@
         executable: powershell
       when: (vs2022_layout_ready.stat.exists)
 
-    - name: Register Visual Studio Community 2022 DIA SDK shared libraries
-      win_command: 'regsvr32 /s "{{ item }}"'
-      with_items:
-        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
-        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
+#    - name: Register Visual Studio Community 2022 DIA SDK shared libraries
+#      win_command: 'regsvr32 /s "{{ item }}"'
+#      with_items:
+#        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
+#        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
 
     - name: Remove VS2022 Zip File
       win_file:
@@ -113,19 +113,20 @@
 
 - name: Run Visual Studio 2022 Installer From Download
   win_shell: |
-      Start-Process -Wait -FilePath 'C:\temp\vs_BuildTools22.exe' -ArgumentList '--wait --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.VisualStudio.Component.VC.MFC.ARM64 --includeRecommended --includeOptional --quiet --norestart'
+      Start-Process -Wait -FilePath 'C:\temp\vs_BuildTools22.exe' -ArgumentList '--wait --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --add Microsoft.VisualStudio.Component.VC.ATL.ARM64 --add Microsoft.VisualStudio.Component.VC.MFC.ARM64 --includeRecommended --includeOptional --quiet --norestart'
   args:
     executable: powershell
   when: (not vs2022_installed.stat.exists) and (windows_version.stdout_lines[0] | regex_search('^(10\.|11\.|2016|2019|2022)'))
   register: vs2022_error
   failed_when: vs2022_error.rc != 0 and vs2022_error.rc != 3010
 
-#- name: Register Visual Studio Community 2022 DIA SDK shared libraries
-#  win_command: 'regsvr32 /s "{{ item }}"'
-#  with_items:
-#    - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
-#    - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
-#  when: (not vs2022_installed.stat.exists) and (windows_version.stdout_lines[0] | regex_search('^(10\.|11\.|2016|2019|2022)'))
+#  Note: If this does not find the files, then the NativeDesktop component was not installed
+- name: Register Visual Studio Community 2022 DIA SDK shared libraries
+  win_command: 'regsvr32 /s "{{ item }}"'
+  with_items:
+    - C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\DIA SDK\bin\msdia140.dll
+    - C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\DIA SDK\bin\amd64\msdia140.dll
+  when: (not vs2022_installed.stat.exists) and (windows_version.stdout_lines[0] | regex_search('^(10\.|11\.|2016|2019|2022)'))
 
 - name: Reboot machine after Visual Studio installation
   win_reboot:
