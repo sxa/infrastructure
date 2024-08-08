@@ -77,11 +77,11 @@
         executable: powershell
       when: (vs2022_layout_ready.stat.exists)
 
-#    - name: Register Visual Studio Community 2022 DIA SDK shared libraries
-#      win_command: 'regsvr32 /s "{{ item }}"'
-#      with_items:
-#        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
-#        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
+    - name: Register Visual Studio Community 2022 DIA SDK shared libraries
+      win_command: 'regsvr32 /s "{{ item }}"'
+      with_items:
+        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\msdia140.dll
+        - C:\Program Files\Microsoft Visual Studio\2022\Community\DIA SDK\bin\amd64\msdia140.dll
 
     - name: Remove VS2022 Zip File
       win_file:
