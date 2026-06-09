@@ -114,7 +114,7 @@ def cosign() {
             for IMAGE_SHA in *.sha256; do
               IMAGE="$(cat $IMAGE_SHA)"
               echo "Running cosign against image $IMAGE"
-              cosign sign "$IMAGE" --oidc-issuer=https://auth.eclipse.org/auth/realms/foundation-service-accounts --identity-token=token.txt -y
+              cosign sign "$IMAGE" --oidc-issuer=https://auth.eclipse.org/auth/realms/foundation-service-accounts --identity-token=token.txt -y --upload=false
               cosign verify "${IMAGE}" --certificate-oidc-issuer=https://auth.eclipse.org/auth/realms/foundation-service-accounts --certificate-identity=temurin-bot@eclipse.org
             done
             rm -vf token.txt
