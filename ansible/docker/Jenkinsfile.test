@@ -5,7 +5,7 @@ pipeline {
             parallel {
                 stage('Ubuntu24.04 x64') {
                     agent {
-                        label "dockerBuild&&linux&&x64&&containerBuilder"
+                        label "dockerhost-azure-ubuntu2204-x64-1"
                     }
                     steps {
                         dockerBuild('amd64', 'ubuntu2404', 'Dockerfile.u2404')
@@ -21,7 +21,7 @@ pipeline {
                 }
                 stage('UBI10 x64') {
                     agent {
-                        label "dockerBuild&&linux&&x64&&containerBuilder"
+                        label "dockerhost-azure-ubuntu2204-x64-1"
                     }
                     steps {
                         dockerBuild('amd64', 'ubi10', 'Dockerfile.ubi10')
@@ -55,7 +55,7 @@ pipeline {
         }
         stage('Docker Manifest') {
             agent {
-                label "dockerBuild&&linux&&x64"
+                label "dockerhost-azure-ubuntu2204-x64-1"
             }
             environment {
                 DOCKER_CLI_EXPERIMENTAL = "enabled"
